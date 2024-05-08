@@ -1,14 +1,27 @@
-- name: Build Flipper Application Package (.fap)
-  uses: flipperdevices/flipperzero-ufbt-action@v0.1.4
-  with:
-    app-dir: '.'  # Path to application's source code (if not the root of the repository)
-    task: 'build'  # Task to run. Valid values: 'build', 'lint', 'setup'
-    ufbt-args: '-s'  # Extra arguments to pass to 'ufbt' for build and lint tasks
-    skip-setup: false  # Skip ufbt setup. Useful for multiple invocations of the action
-    sdk-channel: ''  # Release channel to use. Matches argument "--channel" for ufbt update
-    sdk-branch: ''  # Branch to use for updates. Matches argument "--branch" for ufbt update
-    sdk-index-url: ''  # Index URL to use for updates. Matches argument "--index-url" for ufbt update
-    sdk-file: ''  # Path to SDK archive. Matches argument "--local" for ufbt update
-    sdk-url: ''  # URL to SDK archive. Matches argument "--url" for ufbt update
-    sdk-hw-target: ''  # Hardware target to use. Matches argument "--hw-target" for ufbt update
-    ufbt-version: 'latest'  # ufbt version to use. Can be 'latest', 'prerelease', or a specific version
+name: "FAP: Build and lint"
+on: [push, pull_request]
+jobs:
+  ufbt-build-action:
+    runs-on: ubuntu-latest
+    name: 'ufbt: Build for Dev branch'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build with ufbt
+        uses: flipperdevices/flipperzero-ufbt-action@v0.1.4
+        id: build-app
+        with:
+          # Set to 'release' to build for latest published release version
+          sdk-channel: dev
+      - name: Upload app artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ github.event.repository.name }}-${{ steps.build-app.outputs.suffix }}
+          path: ${{ steps.build-app.outputs.fap-artifacts }}
+      # You can remove this step if you don't want to check source code formatting
+      - name: Lint sources
+        uses: flipperdevices/flipperzero-ufbt-action@v0.1.4
+        with:
+          # skip SDK setup, we already did it in previous step
+          skip-setup: true
+          task: lint
