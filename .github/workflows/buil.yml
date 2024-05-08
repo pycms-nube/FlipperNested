@@ -1,26 +1,14 @@
-
 - name: Build Flipper Application Package (.fap)
   uses: flipperdevices/flipperzero-ufbt-action@v0.1.4
   with:
-    # Path to application's source code (if not the root of the repository)
-    app-dir: '.' # default is current directory
-    # Task to run. Valid values: 'build', 'lint', 'setup'
-    task: 'build' # default is build
-    # Extra arguments to pass to 'ufbt' for build and lint tasks. Default is '-s' to suppress ufbt output and only show subprocess output
-    ufbt-args: '-s' # default is to suppress verbose output
-    # Skip ufbt setup. Useful for multiple invocation of the action
-    skip-setup: false # default is false, means setup will not be skipped
-    # Release channel to use. Matches argument "--channel" for ufbt update
-    sdk-channel: '' # optional, default is empty, set if a specific channel is needed
-    # Branch to use for updates. Matches argument "--branch" for ufbt update
-    sdk-branch: '' # optional, default is empty, set if a specific branch is needed
-    # Index URL to use for updates. Matches argument "--index-url" for ufbt update
-    sdk-index-url: '' # optional, default is empty, set if a specific index URL is needed
-    # Path to SDK archive. Matches argument "--local" for ufbt update
-    sdk-file: '' # optional, default is empty, set if a local SDK archive is to be used
-    # URL to SDK archive. Matches argument "--url" for ufbt update
-    sdk-url: '' # optional, default is empty, set if a specific URL for SDK archive is needed
-    # Hardware target to use. Matches argument "--hw-target" for ufbt update
-    sdk-hw-target: '' # optional, default is empty, set if a specific hardware target is needed
-    # ufbt version to use. Can be 'latest', 'prerelease' or a specific version from PyPI (e.g. '==0.2.1')
-    ufbt-version: 'latest' # default is to use the latest version
+    app-dir: '.'  # Path to application's source code (if not the root of the repository)
+    task: 'build'  # Task to run. Valid values: 'build', 'lint', 'setup'
+    ufbt-args: '-s'  # Extra arguments to pass to 'ufbt' for build and lint tasks
+    skip-setup: false  # Skip ufbt setup. Useful for multiple invocations of the action
+    sdk-channel: ''  # Release channel to use. Matches argument "--channel" for ufbt update
+    sdk-branch: ''  # Branch to use for updates. Matches argument "--branch" for ufbt update
+    sdk-index-url: ''  # Index URL to use for updates. Matches argument "--index-url" for ufbt update
+    sdk-file: ''  # Path to SDK archive. Matches argument "--local" for ufbt update
+    sdk-url: ''  # URL to SDK archive. Matches argument "--url" for ufbt update
+    sdk-hw-target: ''  # Hardware target to use. Matches argument "--hw-target" for ufbt update
+    ufbt-version: 'latest'  # ufbt version to use. Can be 'latest', 'prerelease', or a specific version
